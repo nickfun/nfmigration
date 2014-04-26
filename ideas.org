@@ -8,6 +8,7 @@ to multiple databases. Also, the details on how to connect, and how many connect
 made, will be in another database.
 
 * Goals
+** Overview
 I've used the Laravel migration system a little, my hope is to recreate the major features
 of that system.
 
@@ -18,3 +19,35 @@ of that system.
   - ex: run migrations on a SYSTEM database. the SYSTEM database has a DB table with a list
     of databases that we also need to connect to and run more migrations on
 - allow going up and down to any migration point
+
+At work we have several databases, one of which scales out. Our syste is like this:
+
+- "system", hold general application config
+- "head", holds information about all our customers
+- "body", holds customer data for one or mor customers
+  there are many "body" databases
+
+The "head" database has a "body_dbs" table with connection information to all the "body" databases.
+Ideally, the NFMigration system can be setup so that a "body" migration will gather connection
+info from "head" and run a migration on _each_ "body" database. 
+
+** config
+Setting up the config for something like this will be tricky. Normal connections will just need to 
+supply database information as strings. But a dependant connection will need to supply some code
+that accepts a PDO connection and builds many new PDO connections to be given to the migrations.
+I will need to set this up carefully.
+
+* Ideal usage
+
+Using names from above...
+
+    >php nfmigrate.php migrate:add system update-user-table
+
+The above command would create a new migration called "update-user-table" to be run against the system database.
+It would create a file called `/system/20140426_update-user-table.php` that contains a PHP class with an
+`up` and `down` methods to make and unmake the needed changes. Each method will be passed a PDO object.
+
+    >php nfmigrate.php migrate:add body add-reports-role
+
+The above command would create a similar file, however it will be called several times and each time it is
+passed a PDO object for a different "body" database.
