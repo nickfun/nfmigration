@@ -1,0 +1,20 @@
+#+TITLE: PHP Database Migration System
+#+AUTHOR: Nick F
+#+DATE: 2014-04-26
+
+* Database Migration 
+There are some existing DB Migration tools, but I need something that can handle connection
+to multiple databases. Also, the details on how to connect, and how many connections will be 
+made, will be in another database.
+
+* Goals
+I've used the Laravel migration system a little, my hope is to recreate the major features
+of that system.
+
+- CLI interface
+- generate migration classes with `up` and `down` methods
+- list of databases with credentails stored outside of code
+- databases can depend on other databases to supply the details
+  - ex: run migrations on a SYSTEM database. the SYSTEM database has a DB table with a list
+    of databases that we also need to connect to and run more migrations on
+- allow going up and down to any migration point

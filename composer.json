@@ -1,0 +1,14 @@
+{
+    "name": "nickfun/nfmigrate",
+    "description": "Database Migration app",
+    "require": {
+        "symfony/console": "2.4.3"
+    },
+    "license": "LGPL",
+    "authors": [
+        {
+            "name": "Nick F",
+            "email": "nick@nick.gs"
+        }
+    ]
+}
