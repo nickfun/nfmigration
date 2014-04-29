@@ -7,6 +7,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GreetCommand extends Command {
+    
+    private $sDirPath = "./";
+    
     protected function configure() {
         $this->setName("demo:greet")
                 ->setDescription("Greet Someone")
@@ -27,5 +30,15 @@ class GreetCommand extends Command {
         }
         
         $output->writeln($text);
+        $this->input = $input;
+        $this->output = $output;
+        $this->dirList();
+    }
+    
+    protected function dirList() {
+        $dir = opendir($this->sDirPath);
+        while ($file = readdir($dir)) {
+            $this->output->writeln("File: " . $file);
+        }
     }
 }
