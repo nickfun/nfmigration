@@ -20,11 +20,11 @@ of that system.
     of databases that we also need to connect to and run more migrations on
 - allow going up and down to any migration point
 
-At work we have several databases, one of which scales out. Our syste is like this:
+At work we have several databases, one of which scales out. Our system is like this:
 
 - "system", hold general application config
 - "head", holds information about all our customers
-- "body", holds customer data for one or mor customers
+- "body", holds customer data for one or more customers
   there are many "body" databases
 
 The "head" database has a "body_dbs" table with connection information to all the "body" databases.
