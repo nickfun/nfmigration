@@ -25,8 +25,11 @@ class MigrateNewCommand extends Command {
             $output->writeln("A migration was NOT created");
             return;
         }
+        $prefix = date('Ymd_His') . '_';
+        $file = sprintf("/migrations/%s/%s", $system, $prefix . $name . '.php');
         $output->writeln("System:\t$system");
         $output->writeln("Name:\t$name");
+        $output->writeln("File:\t$file");
         $output->writeln("OK!");
     }
 
