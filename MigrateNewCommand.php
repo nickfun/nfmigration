@@ -30,7 +30,7 @@ class MigrateNewCommand extends Command {
         $output->writeln("System:\t$system");
         $output->writeln("Name:\t$name");
         $output->writeln("File:\t$file");
-        $output->writeln("OK!");
+        $output->writeln("<info>OK!</info>");
     }
 
 }
