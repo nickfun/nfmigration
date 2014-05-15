@@ -51,3 +51,20 @@ It would create a file called `/system/20140426_update-user-table.php` that cont
 
 The above command would create a similar file, however it will be called several times and each time it is
 passed a PDO object for a different "body" database.
+* Migration table schema
+Laravel migrations only have *migration* and *batch*. All I would need is *name* and *batch*
+** Name
+Just the name of the migration. When looking at existing migrations, if the name already exists in the database
+then I know I should not run that migration.
+
+** Batch
+Batch can be used for a rollback command. When I run a migration, the flow could be:
+1. find all migrations that have not been run
+2. find the MAX(batch), add 1 and set that to NEWBATCH
+3. run the migrations, insert their names, set their batch value to NEWBATCH
+
+A rollback command would use the Batch field to determine which migrations were last run. 
+I could also use it to rollback the last X batches.
+
+The NEWBATCH value would be different for different systems. That shouldn't bee too tricky to manage, but it's 
+something to keep in mind.
