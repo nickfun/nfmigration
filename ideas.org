@@ -3,6 +3,7 @@
 #+DATE: 2014-04-26
 
 * Database Migration 
+
 There are some existing DB Migration tools, but I need something that can handle connection
 to multiple databases. Also, the details on how to connect, and how many connections will be 
 made, will be in another database.
@@ -32,6 +33,7 @@ Ideally, the NFMigration system can be setup so that a "body" migration will gat
 info from "head" and run a migration on _each_ "body" database. 
 
 ** config
+
 Setting up the config for something like this will be tricky. Normal connections will just need to 
 supply database information as strings. But a dependant connection will need to supply some code
 that accepts a PDO connection and builds many new PDO connections to be given to the migrations.
@@ -41,23 +43,37 @@ I will need to set this up carefully.
 
 Using names from above...
 
-    >php nfmigrate.php migrate:add system update-user-table
+    $ php nfmigrate.php migrate:add system update-user-table
 
 The above command would create a new migration called "update-user-table" to be run against the system database.
 It would create a file called `/system/20140426_update-user-table.php` that contains a PHP class with an
 `up` and `down` methods to make and unmake the needed changes. Each method will be passed a PDO object.
 
-    >php nfmigrate.php migrate:add body add-reports-role
+    $ php nfmigrate.php migrate:add body add-reports-role
 
 The above command would create a similar file, however it will be called several times and each time it is
 passed a PDO object for a different "body" database.
+
+I'm also thinking a status or check system could be used, just to verify that your connections will work as
+expected. So every System will have a `checkConnection()` class that tries to do a connection and run a simple 
+`select 1;` query to ensure that the whole thing works. Example:
+
+    $ php nfmigrate.php migrate:check
+
+And it would go through every System and confirm that the connection can be made and the dummy query
+runs and returns data.
+
 * Migration table schema
+
 Laravel migrations only have *migration* and *batch*. All I would need is *name* and *batch*
+
 ** Name
+
 Just the name of the migration. When looking at existing migrations, if the name already exists in the database
 then I know I should not run that migration.
 
 ** Batch
+
 Batch can be used for a rollback command. When I run a migration, the flow could be:
 1. find all migrations that have not been run
 2. find the MAX(batch), add 1 and set that to NEWBATCH
