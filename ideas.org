@@ -42,14 +42,17 @@ I will need to set this up carefully.
 * Ideal usage
 
 Using names from above...
-
-    $ php nfmigrate.php migrate:add system update-user-table
+#+BEGIN_EXAMPLE
+$ php nfmigrate.php migrate:add system update-user-table
+#+END_EXAMPLE
 
 The above command would create a new migration called "update-user-table" to be run against the system database.
 It would create a file called `/system/20140426_update-user-table.php` that contains a PHP class with an
 `up` and `down` methods to make and unmake the needed changes. Each method will be passed a PDO object.
 
-    $ php nfmigrate.php migrate:add body add-reports-role
+#+BEGIN_EXAMPLE
+$ php nfmigrate.php migrate:add body add-reports-role
+#+END_EXAMPLE
 
 The above command would create a similar file, however it will be called several times and each time it is
 passed a PDO object for a different "body" database.
@@ -58,7 +61,9 @@ I'm also thinking a status or check system could be used, just to verify that yo
 expected. So every System will have a `checkConnection()` class that tries to do a connection and run a simple 
 `select 1;` query to ensure that the whole thing works. Example:
 
-    $ php nfmigrate.php migrate:check
+#+BEGIN_EXAMPLE
+$ php nfmigrate.php migrate:check
+#+END_EXAMPLE
 
 And it would go through every System and confirm that the connection can be made and the dummy query
 runs and returns data.
