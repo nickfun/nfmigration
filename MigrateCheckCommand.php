@@ -19,14 +19,16 @@ class MigrateCheckCommand extends Command {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+		$this->output = $output;
 		$output->writeln("I will now run through every System and ensure it can connect");
 		$list = scandir("./systems");
 		$count = 0;
 		foreach ($list as $fileName) {
-			if (substr($fileName, -3) == "php") {
+			if (substr($fileName, -4) == ".php") {
+				$class = substr($fileName, 0, -4);
 				$count++;
-				$output->writeln(sprintf("Found: <info>%s</info>", $fileName));
-				$this->runCheck($fileName);
+				// $output->writeln(sprintf("Found: <info>%s</info>", $class));
+				$this->runCheck($class);
 			}
 		}
 		if ($count == 0) {
@@ -34,6 +36,14 @@ class MigrateCheckCommand extends Command {
 		}
     }
 
-	
+	private function runCheck( $className ) {
+		require "./systems/$className" . ".php";
+		$temp = new $className();
+		if ($temp->check()) {
+			$this->output->writeln("$className <info>PASS</info>");
+		} else {
+			$this->output->writeln("$className <error>FAIL</error>");
+		}
+	}
 
 }
