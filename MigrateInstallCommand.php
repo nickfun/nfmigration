@@ -11,7 +11,7 @@ class MigrateInstallCommand extends Command {
     private $sDirPath = "./migrations/";
 
     protected function configure() {
-        $this->setName("migrate:install")
+        $this->setName("install")
 			->setDescription("Install NFMigrate on all systems");
     }
 

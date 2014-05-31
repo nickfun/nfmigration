@@ -14,7 +14,7 @@ class MigrateCheckCommand extends Command {
     private $sDirPath = "./";
 
     protected function configure() {
-        $this->setName("migrate:check");
+        $this->setName("check");
 		$this->setDescription("Check system connections");
     }
 

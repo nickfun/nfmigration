@@ -11,7 +11,7 @@ class MigrateNewCommand extends Command {
     private $sDirPath = "./";
 
     protected function configure() {
-        $this->setName("migrate:new")
+        $this->setName("new")
                 ->setDescription("Create a new Migration")
                 ->addArgument("system", InputArgument::REQUIRED, "System the migration will run against")
                 ->addArgument("name", InputArgument::REQUIRED, "Name of the migration. No Spaces.");

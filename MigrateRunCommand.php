@@ -11,7 +11,7 @@ class MigrateRunCommand extends Command {
     private $sDirPath = "./migrations/";
 
     protected function configure() {
-        $this->setName("migrate:run")
+        $this->setName("run")
 			->setDescription("Run Migrations on a System")
 			->addArgument("system", InputArgument::REQUIRED, "System the migration will run against");
     }
