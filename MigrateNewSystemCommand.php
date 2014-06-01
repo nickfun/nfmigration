@@ -11,19 +11,19 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateNewSystemCommand extends Command {
 
-	private $sDirPath = "./";
+    private $sDirPath = "./";
 
-	protected function configure() {
-		$this->setName("newsystem");
-		$this->setDescription("Check system connections");
-		$this->addArgument("name", InputArgument::REQUIRED, "Name of the system you are creating");
-	}
+    protected function configure() {
+        $this->setName("newsystem");
+        $this->setDescription("Check system connections");
+        $this->addArgument("name", InputArgument::REQUIRED, "Name of the system you are creating");
+    }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-		$name = $input->getArgument("name");
-		$output->writeln("New System: <info>$name</info>");
-		$fileName = "/systems/$name.php";
-		$output->writeln("Filename: <info>$fileName</info>");
+        $name = $input->getArgument("name");
+        $output->writeln("New System: <info>$name</info>");
+        $fileName = "/systems/$name.php";
+        $output->writeln("Filename: <info>$fileName</info>");
     }
 
 }

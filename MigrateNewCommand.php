@@ -20,7 +20,7 @@ class MigrateNewCommand extends Command {
     protected function execute(InputInterface $input, OutputInterface $output) {
         $system = $input->getArgument("system");
         $name = $input->getArgument("name");
-        if (strpos($name, " ") > 0 ) {
+        if (strpos($name, " ") > 0) {
             $output->writeln("<error>ERROR</error> name can not have spaces.");
             $output->writeln("A migration was NOT created");
             return;
