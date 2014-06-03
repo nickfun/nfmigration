@@ -24,8 +24,10 @@ class MigrateNewSystemCommand extends Command {
         $tpl = file_get_contents("template-system.php");
         $tpl = str_replace("$$$", $name, $tpl);
         $output->writeln("New System: <info>$name</info>");
-        $fileName = "/systems/$name.php";
-        file_put_contents($fileName, $tpl);
+        $fileName = "./systems/$name.php";
+        $fh = fopen($fileName, "w+");
+        fwrite($fh, $tpl);
+        fclose($fh);
         $output->writeln("Filename: <info>$fileName</info>");
     }
 
