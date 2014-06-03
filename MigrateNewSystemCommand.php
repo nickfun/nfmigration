@@ -21,8 +21,11 @@ class MigrateNewSystemCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $name = $input->getArgument("name");
+        $tpl = file_get_contents("template-system.php");
+        $tpl = str_replace("$$$", $name, $tpl);
         $output->writeln("New System: <info>$name</info>");
         $fileName = "/systems/$name.php";
+        file_put_contents($fileName, $tpl);
         $output->writeln("Filename: <info>$fileName</info>");
     }
 
