@@ -1,7 +1,9 @@
 *~
+ideas.html
 /vendor
 composer.lock
 /nbproject/
+systems/
 *.log
 #*
 *#

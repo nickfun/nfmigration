@@ -70,7 +70,8 @@ runs and returns data.
 
 * Migration table schema
 
-Laravel migrations only have *migration* and *batch*. All I would need is *name* and *batch*
+Laravel migrations only have =migration= and =batch=. All I would need is =name= and =batch=. Each system has it's own table, I don't need to 
+store =system= info.
 
 ** Name
 
@@ -89,3 +90,32 @@ I could also use it to rollback the last X batches.
 
 The NEWBATCH value would be different for different systems. That shouldn't bee too tricky to manage, but it's 
 something to keep in mind.
+* Naming Schema
+
+Everything will live in the =/system= folder.
+
+#+BEGIN_EXAMPLE
+
+systems
+├── alpha
+│   ├── 20140603_224733_create-admin.php
+│   └── 20140603_224738_backfill-data.php
+├── alpha.php
+├── test1
+│   ├── 20140603_224635_create-users.php
+│   └── 20140603_224647_setup-indexes.php
+└── test1.php
+
+#+END_EXAMPLE
+
+** System
+- A System is a collection of Migrations.
+- A System corresponds to One database, or a set of many databases that serve the same purpose
+- Systems will provide a =getConnection= and =check= function
+
+** Migration
+- A Migration is a SQL script
+- It can be executed with =up= and undone with `down`
+- up/down are boolean functions
+- when =up= fails, =down= will be called and the user notified
+- when =down= fails, all we can do is notify the user
