@@ -8,7 +8,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateNewCommand extends Command {
 
-    private $sDirPath = "./";
+    private $sDirPath = "./systems/";
+    private $sTempalteFile = "./template-migration.php";
 
     protected function configure() {
         $this->setName("new")
@@ -20,17 +21,41 @@ class MigrateNewCommand extends Command {
     protected function execute(InputInterface $input, OutputInterface $output) {
         $system = $input->getArgument("system");
         $name = $input->getArgument("name");
-        if (strpos($name, " ") > 0) {
-            $output->writeln("<error>ERROR</error> name can not have spaces.");
-            $output->writeln("A migration was NOT created");
+
+        if (!$this->isSystem($system)) {
+            $output->writeln("<error>Invalid System:</error> $system");
             return;
         }
-        $prefix = date('Ymd_His') . '_';
-        $file = sprintf("/migrations/%s/%s", $system, $prefix . $name . '.php');
+        if (!$this->isValidName($name)) {
+            $output->writeln("<error>Invalid name:</error> $name");
+            return;
+        }
+
+        $fileName = $this->makeNewMigration($system, $name);
         $output->writeln("System:\t$system");
         $output->writeln("Name:\t$name");
-        $output->writeln("File:\t$file");
+        $output->writeln("File:\t$fileName");
         $output->writeln("<info>OK!</info>");
+    }
+
+    private function isSystem($system) {
+        $test = $this->sDirPath . $system;
+        return file_exists($test);
+    }
+
+    private function isValidName($name) {
+        return strpos($name, " ") === false;
+    }
+    public function makeNewMigration($system, $name) {
+        $prefix = date('Ymd_His') . '_';
+        $fileName = $this->sDirPath . $system . "/" . $prefix . $name . ".php";
+        
+        $contents = file_get_contents($this->sTempalteFile);
+        $contents = str_replace("TEMPLATE_MIGRAGION", $name, $contents);
+        $fh = fopen($fileName, "w+");
+        fwrite($fh, $contents);
+        fclose($fh);
+        return $fileName;
     }
 
 }
