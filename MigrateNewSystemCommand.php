@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateNewSystemCommand extends Command {
 
-    private $sDirPath = "./";
+    private $sDirPath = "./systems/";
 
     protected function configure() {
         $this->setName("newsystem");
@@ -21,14 +21,23 @@ class MigrateNewSystemCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $name = $input->getArgument("name");
+        if (!$this->isValidName($name)) {
+            $output->writeln("<error>Invalid name:</error> $name");
+            return;
+        }
         $tpl = file_get_contents("template-system.php");
-        $tpl = str_replace("$$$", $name, $tpl);
+        $tpl = str_replace("TEMPLATE_SYSTEM", $name, $tpl);
         $output->writeln("New System: <info>$name</info>");
-        $fileName = "./systems/$name.php";
+        $fileName = $this->sDirPath . $name . ".php";
         $fh = fopen($fileName, "w+");
         fwrite($fh, $tpl);
         fclose($fh);
+        mkdir($this->sDirPath . $name);
         $output->writeln("Filename: <info>$fileName</info>");
+    }
+    
+    private function isValidName($name) {
+        return strpos($name, " ") === false;
     }
 
 }

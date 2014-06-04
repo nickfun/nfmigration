@@ -1,6 +1,6 @@
 <?php
 
-class $$$ {
+class TEMPLATE_SYSTEM {
     public $dsn = "mysql:host=localhost;dbname=test1";
     public $user = "test";
     public $pass = "testpassword";
