@@ -91,6 +91,7 @@ I could also use it to rollback the last X batches.
 The NEWBATCH value would be different for different systems. That shouldn't bee too tricky to manage, but it's 
 something to keep in mind.
 * Naming Schema
+** Overview
 
 Everything will live in the =/system= folder.
 
@@ -119,3 +120,11 @@ systems
 - up/down are boolean functions
 - when =up= fails, =down= will be called and the user notified
 - when =down= fails, all we can do is notify the user
+- Name: <timestamp>_<name>.php
+  - Advantage: filename sort!
+  - Disadvantage: PHP Classnames can not start with a number!
+** TODO Decide on file & class names
+- php classes can not start with a number
+- I want the filenames to be easily sortable by creation
+- options?
+
