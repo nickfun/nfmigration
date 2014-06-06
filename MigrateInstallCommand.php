@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateInstallCommand extends Command {
 
     private $sDirPath = "./migrations/";
-	prviate $utils;
+	private $utils;
 
 	public function __construct($utils) {
 		$this->utils = $utils;
@@ -23,12 +23,11 @@ class MigrateInstallCommand extends Command {
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
-        $output->writeln("This will <info>install</info> the NFMigrate tables onto all systems.");
-        $output->writeln("Is this correct?");
-        $systems = ['HEAD', 'BODY', 'SYS', 'WAREHOUSE'];
-        foreach ($systems as $name) {
-            $output->writeln("\t$name");
-        }
+        $list = $this->utils->getSystemsList();
+		foreach ($list as $system) {
+			$output->writeln("System: $system");
+		}
+		$output->writeln("<error>Command not implemented yet :(</error>");
     }
 
 }

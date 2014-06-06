@@ -1,7 +1,9 @@
 <?php
 
 class MigrationUtils {
-	
+
+	public $systemDir = "./systems/";
+
 	function getSystemsList() {
 
 	    $list = array();

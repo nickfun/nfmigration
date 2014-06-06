@@ -16,6 +16,7 @@ class MigrateNewSystemCommand extends Command {
 
 	public function __construct($utils) {
 		$this->utils = $utils;
+		parent::__construct();
 	}
 
     protected function configure() {

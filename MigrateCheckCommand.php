@@ -27,23 +27,20 @@ class MigrateCheckCommand extends Command {
     protected function execute(InputInterface $input, OutputInterface $output) {
         $this->output = $output;
         $output->writeln("I will now run through every System and ensure it can connect");
-        $list = scandir("./systems");
-        $count = 0;
-        foreach ($list as $fileName) {
-            if (substr($fileName, -4) == ".php") {
-                $class = substr($fileName, 0, -4);
-                $count++;
-                // $output->writeln(sprintf("Found: <info>%s</info>", $class));
-                $this->runCheck($class);
-            }
-        }
+
+		$list = $this->utils->getSystemsList();
+		$count = count($list);
+		foreach ($list as $system) {
+			$this->runCheck($system);
+		}
+
         if ($count == 0) {
             $output->writeln("<error>No Systems Found</error>");
         }
     }
 
     private function runCheck($className) {
-        require "./systems/$className" . ".php";
+        require $this->utils->systemDir . $className . ".php";
         $temp = new $className();
         if ($temp->check()) {
             $this->output->writeln("$className <info>PASS</info>");
