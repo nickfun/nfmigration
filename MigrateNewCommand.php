@@ -10,14 +10,18 @@ class MigrateNewCommand extends Command {
 
     private $sDirPath = "./systems/";
     private $sTempalteFile = "./template-migration.php";
-	private $util;
+	private $utils;
 
-    protected function configure($util) {
+	public function __construct($utils) {
+		$this->utils = $utils;
+		parent::__construct();
+	}
+
+    protected function configure() {
         $this->setName("new")
                 ->setDescription("Create a new Migration")
                 ->addArgument("system", InputArgument::REQUIRED, "System the migration will run against")
                 ->addArgument("name", InputArgument::REQUIRED, "Name of the migration. No Spaces.");
-		$this->util = $util;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {

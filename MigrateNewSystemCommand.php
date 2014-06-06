@@ -14,8 +14,11 @@ class MigrateNewSystemCommand extends Command {
     private $sDirPath = "./systems/";
 	private $utils;
 
-    protected function configure($utils) {
+	public function __construct($utils) {
 		$this->utils = $utils;
+	}
+
+    protected function configure() {
         $this->setName("newsystem");
         $this->setDescription("Check system connections");
         $this->addArgument("name", InputArgument::REQUIRED, "Name of the system you are creating");

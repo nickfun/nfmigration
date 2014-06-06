@@ -9,6 +9,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateInstallCommand extends Command {
 
     private $sDirPath = "./migrations/";
+	prviate $utils;
+
+	public function __construct($utils) {
+		$this->utils = $utils;
+		parent::__construct();
+	}
 
     protected function configure() {
         $this->setName("install")

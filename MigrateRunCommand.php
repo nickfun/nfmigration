@@ -9,13 +9,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateRunCommand extends Command {
 
     private $sDirPath = "./systems/";
-	private $util;
+	private $utils;
 
-    protected function configure($util) {
+	public function __construct($utils) {
+		$this->utils = $utils;
+	}
+
+    protected function configure() {
         $this->setName("run")
                 ->setDescription("Run Migrations on a System")
                 ->addArgument("system", InputArgument::OPTIONAL, "System the migration will run against");
-		$this->util = $util;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
