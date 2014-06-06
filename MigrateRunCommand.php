@@ -8,29 +8,58 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MigrateRunCommand extends Command {
 
-    private $sDirPath = "./migrations/";
+    private $sDirPath = "./systems/";
 
     protected function configure() {
         $this->setName("run")
                 ->setDescription("Run Migrations on a System")
-                ->addArgument("system", InputArgument::REQUIRED, "System the migration will run against");
+                ->addArgument("system", InputArgument::OPTIONAL, "System the migration will run against");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+        $this->input = $input;
+        $this->output = $output;
+        
         $system = $input->getArgument("system");
-        $dirName = $this->sDirPath . $system;
-
-        $output->writeln("Run Migrations <info>$system</info>");
-        $output->writeln("Migrations are in $dirName");
-
-        if (!file_exists($dirName)) {
-            $output->writeln("<error>Can not open folder for $system</error>");
-            return;
+        if (empty($system)) {
+            $system = false;
         }
-        $dir = dir($dirName);
-        while ($file = $dir->read()) {
-            $output->writeln($file);
+        
+        if (!$system) {
+            $output->writeln("<info>Run ALL Systems!</info>");
+            $list = $this->getSystemsList();
+            if (empty($list)) {
+                $output->writeln("<error>No Systems</error>");
+            }
+            foreach ($list as $sys) {
+                $this->runMigrations($sys);
+            }
+        } else {
+            $this->runMigrations($system);
+        }
+
+    }
+    
+    function runMigrations($systemName) {
+        $this->output->writeln("Running system $systemName ...");
+        
+        $dir = "./systems/" . $systemName . "/";
+        $d = dir($dir);
+        while ($file = $d->read()) {
+            if (substr($file, -4) == ".php") {
+                $this->output->writeln("exec: " . $file);
+            }
         }
     }
 
+    function getSystemsList() {
+        $list = array();
+        $d = dir("./systems");
+        while ($file = $d->read()) {
+            if (substr($file, -4) == ".php") {
+                $list[] = substr($file, 0, -4);
+            }
+        }
+        return $list;
+    }
 }

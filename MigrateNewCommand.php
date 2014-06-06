@@ -44,14 +44,23 @@ class MigrateNewCommand extends Command {
     }
 
     private function isValidName($name) {
-        return strpos($name, " ") === false;
-    }
-    public function makeNewMigration($system, $name) {
-        $prefix = date('Ymd_His') . '_';
-        $fileName = $this->sDirPath . $system . "/" . $prefix . $name . ".php";
+        if (strpos($name, " ") === false) {
+            // good
+        } else {
+            return false;
+        }
         
+        return true;
+    }
+
+    public function makeNewMigration($system, $name) {
+        $prefix = date('Ymd_His');
+        $name = str_replace("-", "_", $name);
+        $fileName = $this->sDirPath . $system . "/" . $prefix . "_" . $name . ".php";
+        $className = $name . "_" . $prefix;
+
         $contents = file_get_contents($this->sTempalteFile);
-        $contents = str_replace("TEMPLATE_MIGRAGION", $name, $contents);
+        $contents = str_replace("TEMPLATE_MIGRAGION", $className, $contents);
         $fh = fopen($fileName, "w+");
         fwrite($fh, $contents);
         fclose($fh);
