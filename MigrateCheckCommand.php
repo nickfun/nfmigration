@@ -12,10 +12,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateCheckCommand extends Command {
 
     private $sDirPath = "./";
+	private $util;
 
-    protected function configure() {
+    protected function configure($util) {
         $this->setName("check");
         $this->setDescription("Check system connections");
+		$this->util = $util;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {

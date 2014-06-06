@@ -12,7 +12,8 @@ class MigrateInstallCommand extends Command {
 
     protected function configure() {
         $this->setName("install")
-                ->setDescription("Install NFMigrate on all systems");
+			->setDescription("Install NFMigrate on all systems")
+			->addArgument("system", InputArgument::OPTIONAL, "System to run on. Leave off to run on all systems");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {

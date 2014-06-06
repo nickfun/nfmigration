@@ -9,11 +9,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateRunCommand extends Command {
 
     private $sDirPath = "./systems/";
+	private $util;
 
-    protected function configure() {
+    protected function configure($util) {
         $this->setName("run")
                 ->setDescription("Run Migrations on a System")
                 ->addArgument("system", InputArgument::OPTIONAL, "System the migration will run against");
+		$this->util = $util;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
@@ -52,14 +54,4 @@ class MigrateRunCommand extends Command {
         }
     }
 
-    function getSystemsList() {
-        $list = array();
-        $d = dir("./systems");
-        while ($file = $d->read()) {
-            if (substr($file, -4) == ".php") {
-                $list[] = substr($file, 0, -4);
-            }
-        }
-        return $list;
-    }
 }

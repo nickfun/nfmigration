@@ -12,8 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateNewSystemCommand extends Command {
 
     private $sDirPath = "./systems/";
+	private $utils;
 
-    protected function configure() {
+    protected function configure($utils) {
+		$this->utils = $utils;
         $this->setName("newsystem");
         $this->setDescription("Check system connections");
         $this->addArgument("name", InputArgument::REQUIRED, "Name of the system you are creating");

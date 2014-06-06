@@ -12,13 +12,16 @@ require "MigrateRunCommand.php";
 require "MigrateInstallCommand.php";
 require "MigrateCheckCommand.php";
 require "MigrateNewSystemCommand.php";
+require "MigrationUtils.php";
 
 use Symfony\Component\Console\Application;
 
+$utils = new MigrationUtils();
+
 $app = new Application();
-$app->add(new MigrateNewCommand());
-$app->add(new MigrateNewSystemCommand());
-$app->add(new MigrateRunCommand());
-$app->add(new MigrateInstallCommand());
-$app->add(new MigrateCheckCommand());
+$app->add(new MigrateNewCommand($utils));
+$app->add(new MigrateNewSystemCommand($utils));
+$app->add(new MigrateRunCommand($utils));
+$app->add(new MigrateInstallCommand($utils));
+$app->add(new MigrateCheckCommand($utils));
 $app->run();
