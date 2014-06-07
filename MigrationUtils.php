@@ -3,6 +3,11 @@
 class MigrationUtils {
 
 	public $systemDir = "./systems/";
+	private $systems;
+
+	function __construct() {
+		$systems = array();
+	}
 
 	function getSystemsList() {
 
@@ -15,4 +20,17 @@ class MigrationUtils {
 		}
 		return $list;
 	}
+
+	/**
+	 * @TODO test this
+	 */
+	function getSystem($name) {
+		if (!isset($this->systems[$name])) {
+			require_once $this->systemDir . $name . ".php";
+			$s = new $name();
+			$this->systems[$name] = $s;
+		}
+		return $this->systems[$name];
+	}
+
 }
