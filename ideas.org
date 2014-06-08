@@ -43,7 +43,7 @@ I will need to set this up carefully.
 
 Using names from above...
 #+BEGIN_EXAMPLE
-$ php nfmigrate.php migrate:add system update-user-table
+$ php nfmigrate.php add system update-user-table
 #+END_EXAMPLE
 
 The above command would create a new migration called "update-user-table" to be run against the system database.
@@ -51,7 +51,7 @@ It would create a file called `/system/20140426_update-user-table.php` that cont
 `up` and `down` methods to make and unmake the needed changes. Each method will be passed a PDO object.
 
 #+BEGIN_EXAMPLE
-$ php nfmigrate.php migrate:add body add-reports-role
+$ php nfmigrate.php add body add-reports-role
 #+END_EXAMPLE
 
 The above command would create a similar file, however it will be called several times and each time it is
@@ -62,7 +62,7 @@ expected. So every System will have a `checkConnection()` class that tries to do
 `select 1;` query to ensure that the whole thing works. Example:
 
 #+BEGIN_EXAMPLE
-$ php nfmigrate.php migrate:check
+$ php nfmigrate.php check
 #+END_EXAMPLE
 
 And it would go through every System and confirm that the connection can be made and the dummy query
