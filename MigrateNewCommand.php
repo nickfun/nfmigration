@@ -10,12 +10,12 @@ class MigrateNewCommand extends Command {
 
     private $sDirPath = "./systems/";
     private $sTempalteFile = "./template-migration.php";
-	private $utils;
+    private $utils;
 
-	public function __construct($utils) {
-		$this->utils = $utils;
-		parent::__construct();
-	}
+    public function __construct($utils) {
+        $this->utils = $utils;
+        parent::__construct();
+    }
 
     protected function configure() {
         $this->setName("new")
@@ -55,7 +55,7 @@ class MigrateNewCommand extends Command {
         } else {
             return false;
         }
-        
+
         return true;
     }
 

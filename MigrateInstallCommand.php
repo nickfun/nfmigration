@@ -9,25 +9,25 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateInstallCommand extends Command {
 
     private $sDirPath = "./migrations/";
-	private $utils;
+    private $utils;
 
-	public function __construct($utils) {
-		$this->utils = $utils;
-		parent::__construct();
-	}
+    public function __construct($utils) {
+        $this->utils = $utils;
+        parent::__construct();
+    }
 
     protected function configure() {
         $this->setName("install")
-			->setDescription("Install NFMigrate on all systems")
-			->addArgument("system", InputArgument::OPTIONAL, "System to run on. Leave off to run on all systems");
+                ->setDescription("Install NFMigrate on all systems")
+                ->addArgument("system", InputArgument::OPTIONAL, "System to run on. Leave off to run on all systems");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $list = $this->utils->getSystemsList();
-		foreach ($list as $system) {
-			$output->writeln("System: $system");
-		}
-		$output->writeln("<error>Command not implemented yet :(</error>");
+        foreach ($list as $system) {
+            $output->writeln("System: $system");
+        }
+        $output->writeln("<error>Command not implemented yet :(</error>");
     }
 
 }

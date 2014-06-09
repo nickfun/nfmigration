@@ -12,12 +12,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateCheckCommand extends Command {
 
     private $sDirPath = "./";
-	private $utils;
+    private $utils;
 
-	public function __construct($utils) {
-		$this->utils = $utils;
-		parent::__construct();
-	}
+    public function __construct($utils) {
+        $this->utils = $utils;
+        parent::__construct();
+    }
 
     protected function configure() {
         $this->setName("check");
@@ -28,11 +28,11 @@ class MigrateCheckCommand extends Command {
         $this->output = $output;
         $output->writeln("I will now run through every System and ensure it can connect");
 
-		$list = $this->utils->getSystemsList();
-		$count = count($list);
-		foreach ($list as $system) {
-			$this->runCheck($system);
-		}
+        $list = $this->utils->getSystemsList();
+        $count = count($list);
+        foreach ($list as $system) {
+            $this->runCheck($system);
+        }
 
         if ($count == 0) {
             $output->writeln("<error>No Systems Found</error>");

@@ -12,12 +12,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class MigrateNewSystemCommand extends Command {
 
     private $sDirPath = "./systems/";
-	private $utils;
+    private $utils;
 
-	public function __construct($utils) {
-		$this->utils = $utils;
-		parent::__construct();
-	}
+    public function __construct($utils) {
+        $this->utils = $utils;
+        parent::__construct();
+    }
 
     protected function configure() {
         $this->setName("newsystem");
@@ -41,7 +41,7 @@ class MigrateNewSystemCommand extends Command {
         mkdir($this->sDirPath . $name);
         $output->writeln("Filename: <info>$fileName</info>");
     }
-    
+
     private function isValidName($name) {
         return strpos($name, " ") === false;
     }
