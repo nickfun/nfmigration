@@ -40,12 +40,11 @@ class MigrateCheckCommand extends Command {
     }
 
     private function runCheck($className) {
-        require $this->utils->systemDir . $className . ".php";
-        $temp = new $className();
-        if ($temp->check()) {
-            $this->output->writeln("$className <info>PASS</info>");
+        $obj = $this->utils->getSystem($className);
+        if ($obj->check()) {
+            $this->output->writeln("$className <info>Pass</info>");
         } else {
-            $this->output->writeln("$className <error>FAIL</error>");
+            $this->output->writeln("$className <error>Fail</error>");
         }
     }
 
