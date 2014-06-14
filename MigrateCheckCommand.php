@@ -55,6 +55,7 @@ class MigrateCheckCommand extends Command {
             }
             return true;
         } catch (\Exception $e) {
+            $this->output->writeln("<error>Exception!</error>\n" . $e->getMessage());
             return false;
         }
     }
