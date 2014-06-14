@@ -31,7 +31,12 @@ class MigrateCheckCommand extends Command {
         $list = $this->utils->getSystemsList();
         $count = count($list);
         foreach ($list as $system) {
-            $this->runCheck($system);
+            $pass = $this->runCheck($system);
+            if ($pass) {
+                $this->output->writeln("<info>PASS</info> $system");
+            } else {
+                $this->output->writeln("<error>FAIL</error> $system");
+            }
         }
 
         if ($count == 0) {
@@ -40,11 +45,17 @@ class MigrateCheckCommand extends Command {
     }
 
     private function runCheck($className) {
-        $obj = $this->utils->getSystem($className);
-        if ($obj->check()) {
-            $this->output->writeln("$className <info>Pass</info>");
-        } else {
-            $this->output->writeln("$className <error>Fail</error>");
+        try {
+            $obj = $this->utils->getSystem($className);
+            $conns = $obj->getConnections();
+            foreach ($conns as $conn) {
+                if (!$obj->check($conn)) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (\Exception $e) {
+            return false;
         }
     }
 
