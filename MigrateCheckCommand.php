@@ -48,6 +48,10 @@ class MigrateCheckCommand extends Command {
         try {
             $obj = $this->utils->getSystem($className);
             $conns = $obj->getConnections();
+			if (!is_array($conns)) {
+				$this->output->writeln("$className must provide an array of PDO connections");
+				return false;
+			}
             foreach ($conns as $conn) {
                 if (!$obj->check($conn)) {
                     return false;
