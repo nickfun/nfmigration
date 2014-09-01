@@ -37,7 +37,22 @@ info from "head" and run a migration on _each_ "body" database.
 Setting up the config for something like this will be tricky. Normal connections will just need to 
 supply database information as strings. But a dependant connection will need to supply some code
 that accepts a PDO connection and builds many new PDO connections to be given to the migrations.
-I will need to set this up carefully.
+I will need to set this up carefully.j
+
+Another idea: A simple INI file, but a system to refer to other parts of the INI? Something like:
+
+#+BEGIN_SRC
+[main_data]
+user = xxx
+pass = xxx
+host = xxx
+port = xxx
+
+[dependant_data]
+_refer = main_data
+#+END_SRC
+
+PHP has built-in functions to deal with INI files, this might be an easy way to start.
 
 * Ideal usage
 
