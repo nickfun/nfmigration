@@ -7,12 +7,12 @@
 
 require "vendor/autoload.php";
 
-require "MigrateNewCommand.php";
-require "MigrateRunCommand.php";
-require "MigrateInstallCommand.php";
-require "MigrateCheckCommand.php";
-require "MigrateNewSystemCommand.php";
-require "MigrationUtils.php";
+require "lib/MigrateNewCommand.php";
+require "lib/MigrateRunCommand.php";
+require "lib/MigrateInstallCommand.php";
+require "lib/MigrateCheckCommand.php";
+require "lib/MigrateNewSystemCommand.php";
+require "lib/MigrationUtils.php";
 
 use Symfony\Component\Console\Application;
 
